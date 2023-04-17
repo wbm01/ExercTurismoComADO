@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace AndreTurismo.Models
 {
-    internal class Passagem
+    public class City
     {
+        public int IdCity { get; set; }
+
+        public string Description { get; set; }
+
+        public DateTime DtRegisterCity { get; set; }
     }
 }

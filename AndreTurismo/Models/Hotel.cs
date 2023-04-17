@@ -6,7 +6,16 @@ using System.Threading.Tasks;
 
 namespace AndreTurismo.Models
 {
-    internal class Hotel
+    public class Hotel
     {
+        public int IdHotel { get; set; }
+
+        public string NameHotel { get; set; }
+
+        public  Address AddressHotel { get; set; }
+
+        public DateTime DtRegisterHotel { get; set; }
+
+        public double ValueHotel { get; set; }
     }
 }
