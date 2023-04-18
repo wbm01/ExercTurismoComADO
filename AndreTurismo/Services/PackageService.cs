@@ -13,7 +13,7 @@ namespace AndreTurismo.Services
         readonly string strConn = @"Server=(localdb)\MSSQLLocalDB;Integrated Security=true;AttachDbFileName=C:\Users\adm\source\repos\ProjAulaADO\Banco de Dados\turismo2.mdf;";
         readonly SqlConnection conn;
 
-        public HotelService()
+        public PackageService()
         {
             conn = new SqlConnection(strConn);
             conn.Open();
@@ -30,9 +30,10 @@ namespace AndreTurismo.Services
 
                 SqlCommand commandInsert = new SqlCommand(insert, conn);
 
-                commandInsert.Parameters.Add(new SqlParameter("@Name_Hotel", hotel.NameHotel));
-                commandInsert.Parameters.Add(new SqlParameter("@Id_Address_Hotel", hotel.AddressHotel.IdAddress));
-                commandInsert.Parameters.Add(new SqlParameter("@Hotel_Value", hotel.ValueHotel));
+                commandInsert.Parameters.Add(new SqlParameter("@Id_Hotel_Package", package.HotelPackage.IdHotel));
+                commandInsert.Parameters.Add(new SqlParameter("@Id_Ticket_Package", package.TicketPackage.IdTicket));
+                commandInsert.Parameters.Add(new SqlParameter("@Package_Value", package.ValuePackage));
+                commandInsert.Parameters.Add(new SqlParameter("@Id_Client_Package", package.ClientPackage.IdClient));
 
                 commandInsert.ExecuteNonQuery();
                 status = true;

@@ -8,6 +8,7 @@ namespace AndreTurismo.Models
 {
     public class Ticket
     {
+        public int IdTicket { get; set; }
         public Address Origin { get; set; }
 
         public Address Destiny { get; set; }
