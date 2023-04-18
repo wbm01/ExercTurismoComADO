@@ -16,7 +16,7 @@ namespace AndreTurismo.Models
 
         public override string ToString()
         {
-            return "\nNome da cidade: " + Description + "\nData de cadastro: " + DtRegisterCity;
+            return "\nCidade: " + Description;
         }
     }
 }

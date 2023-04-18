@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using AndreTurismo.Models;
@@ -118,7 +119,9 @@ namespace AndreTurismo.Services
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select*from Client");
+            sb.Append("SELECT c.Id_Client, c.Name_Client, c.Phone, a.Street, a.Number,a.Neighborhood, a.Cep, a.Complement, ci.Description FROM Client c JOIN Address a on c.Id_Address_Client= a.Id_Address join City ci on ci.Id_City = a.Id_City_Address");
+
+
 
             SqlCommand commandSelect = new SqlCommand(sb.ToString(), conn);
             SqlDataReader reader = commandSelect.ExecuteReader();
@@ -126,12 +129,32 @@ namespace AndreTurismo.Services
             while (reader.Read())
             {
                 Client client = new Client();
+                
+                
 
+                client.IdClient = (int)reader["Id_Client"];
                 client.NameClient = (string)reader["Name_Client"];
                 client.Phone = (string)reader["Phone"];
-                client.AddressClient.IdAddress = (int)reader["Id_Address_Client"];
-          
-                //city.DtRegisterCity = (string)reader["DtRegister_City"];
+                //client.AddressClient.IdAddress = (int)reader["Id_Address_Client"];
+
+
+                /*client.AddressClient.Street = (string)reader["Street"];
+                client.AddressClient.Number = (int)reader["Number"];
+                client.AddressClient.Neighborhood = (string)reader["Neighborhood"];
+                client.AddressClient.Cep = (string)reader["Cep"];
+                client.AddressClient.Complement = (string)reader["Complement"];
+                client.AddressClient.Neighborhood = (string)reader["Neighborhood"];
+                client.AddressClient.City.Description = (string)reader["Description"];*/
+                client.AddressClient = new Address();
+                client.AddressClient.Street = (string)reader["Street"];
+                client.AddressClient.Number = (int)reader["Number"];
+                client.AddressClient.Neighborhood = (string)reader["Neighborhood"];
+                client.AddressClient.Cep = (string)reader["Cep"];
+                client.AddressClient.Complement = (string)reader["Complement"];
+                client.AddressClient.City = new City();
+                client.AddressClient.City.Description = (string)reader["Description"];
+
+
 
                 list.Add(client);
             }

@@ -8,20 +8,20 @@ internal class Program
         //INSERT CLIENT OK
         /*var pessoa = new Client()
         {
-            NameClient = "Willian",
-            Phone = "11111",
+            NameClient = "José",
+            Phone = "222222",
 
             AddressClient = new()
             {
-                Street = "AV. 7 de Setembro",
-                Number = 391,
-                Neighborhood = "Selmi Dei",
-                Cep = "14900-000",
+                Street = "AV. 8 de Setembro",
+                Number = 392,
+                Neighborhood = "Centro",
+                Cep = "14920-000",
                 Complement = "Casa",
                 
                 City = new()
                 {
-                    Description = "Tabatinga",
+                    Description = "São Paulo",
                 }
             }
             
@@ -31,12 +31,12 @@ internal class Program
         if (new ClientController().InsertClient(pessoa))
         {
             Console.WriteLine("Sucesso! Registro inserido!");
-            Console.ReadKey();
+            
         }
         else
         {
             Console.WriteLine("Erro ao inserir o registro!");
-            Console.ReadKey();
+            
         }*/
         
 

@@ -27,8 +27,7 @@ namespace AndreTurismo.Models
         public override string ToString()
         {
             return "\nEndereço: " + Street + "\nNúmero: " + Number + "\nBairro: "
-                + Neighborhood + "\nCep: " + Cep + "\nComplemento: " + Complement +
-                "\nCidade: " + City + "\nData de cadastro: " + DtRegisterAddress;
+                + Neighborhood + "\nCep: " + Cep + "\nComplemento: " + Complement + City;
         }
     }
 }
