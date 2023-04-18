@@ -10,11 +10,6 @@ namespace AndreTurismo.Controllers
 {
     public class CityController
     {
-        public bool InsertCity(City city)
-        {
-            return new CityService().InsertCity(city);
-        }
-
         public List<City> SelectListCity()
         {
             return new CityService().GetCityList();
@@ -29,6 +24,7 @@ namespace AndreTurismo.Controllers
         { 
             return new CityService().DeleteCity(city);
         }
+
     }
 
     

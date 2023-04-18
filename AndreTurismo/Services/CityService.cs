@@ -19,33 +19,7 @@ namespace AndreTurismo.Services
             conn.Open();
         }
 
-        public bool InsertCity(City city)
-        {
-            bool status = false;
-
-            try
-            {
-                string insert = "insert into City(Description) values (@Description)";
-
-                SqlCommand commandInsert = new SqlCommand(insert, conn);
-
-                commandInsert.Parameters.Add(new SqlParameter("@Description", city.Description));
-                //commandInsert.Parameters.Add(new SqlParameter("@DataRegister_City", city.DtRegisterCity));
-
-                commandInsert.ExecuteNonQuery();
-                status = true;
-            }
-            catch (Exception) 
-            { 
-                status = false;
-                throw;
-            }
-            finally
-            {
-                conn.Close();
-            }
-            return status;
-        }
+        //
 
         public List<City> GetCityList()
         {

@@ -20,7 +20,5 @@ internal class Program
             Console.WriteLine("Erro! Não foi possível incluir a cidade!");
         }
 
-        new CityController().SelectListCity().ForEach(Console.WriteLine);
-
     }
 }
