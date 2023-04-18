@@ -25,7 +25,8 @@ namespace AndreTurismo.Services
 
             try
             {
-                string insert = "insert into Hotel (Name_Hotel, Id_Address_Hotel, Hotel_Value)";
+                string insert = "insert into Hotel (Name_Hotel, Id_Address_Hotel, Hotel_Value) values (@Name_Hotel," +
+                    "@Id_Address_Hotel, @Hotel_Value); Select cast(scope_identity() as int)";
 
                 SqlCommand commandInsert = new SqlCommand(insert, conn);
 

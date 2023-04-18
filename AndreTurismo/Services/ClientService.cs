@@ -26,7 +26,8 @@ namespace AndreTurismo.Services
 
             try
             {
-                string insert = "insert into Client (Name_Client, Phone, Id_Address_Client)";
+                string insert = "insert into Client (Name_Client, Phone, Id_Address_Client) values (@Name_Client," +
+                    "@Phone,@Id_Address_Client); Select cast(scope_identity() as int)";
 
                 SqlCommand commandInsert = new SqlCommand(insert, conn);
 
