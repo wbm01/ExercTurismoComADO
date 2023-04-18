@@ -22,12 +22,12 @@ namespace AndreTurismo.Controllers
 
         public List<Address> GetAddressList()
         {
-            return new AddressController().GetAddressList();
+            return new AddressService().GetAddressList();
         }
 
         public bool UpdateAddress(Address address)
         {
-            return new AddressController().UpdateAddress(address);
+            return new AddressService().UpdateAddress(address);
         }
     }
 }

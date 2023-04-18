@@ -38,7 +38,7 @@ internal class Program
             Console.WriteLine("Erro ao inserir o registro!");
             
         }*/
-        
+
 
         //INSERT HOTEL OK
         /*var hotel = new Hotel()
@@ -71,15 +71,15 @@ internal class Program
             Console.WriteLine("Erro ao inserir o registro!");
             Console.ReadKey();
         }*/
-        
 
-        var pessoa = new Client()
+        //UPDATE CLIENTE OK
+        /*var pessoa = new Client()
         {
             NameClient = "Maria",
             Phone = "3333",
             IdClient = 4,
 
-            /*AddressClient = new()
+            AddressClient = new()
             {
                 Street = "AV. 8 de Setembro",
                 Number = 391,
@@ -91,7 +91,7 @@ internal class Program
                 {
                     Description = "Ribeirão",
                 }
-            }*/
+            }
 
 
         };
@@ -105,7 +105,7 @@ internal class Program
         {
             Console.WriteLine("Erro ao alterar o registro!");
             Console.ReadKey();
-        }
+        }*/
 
         //DELETE OK
         /*var pessoa = new Client()
@@ -126,5 +126,34 @@ internal class Program
 
         //SELECT OK
         //new ClientController().GetClientList().ForEach(i => Console.WriteLine(i));
+
+        //SELECT ADDRESS OK
+        //new AddressController().GetAddressList().ForEach(i => Console.WriteLine(i));
+
+        var address = new Address()
+        {
+            Street = "AV. 10 de Setembro",
+            Number = 400,
+            Neighborhood = "Selmi Dei II",
+            Cep = "14700-000",
+            Complement = "sobrado",
+            IdAddress = 1,
+
+            City = new()
+            {
+                Description = "Ribeirão Pires",
+            }
+        };
+
+        if (new AddressController().UpdateAddress(address))
+        {
+            Console.WriteLine("Sucesso! Registro alterado!");
+            Console.ReadKey();
+        }
+        else
+        {
+            Console.WriteLine("Erro ao alterar o registro!");
+            Console.ReadKey();
+        }
     }
 }

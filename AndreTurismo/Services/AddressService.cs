@@ -73,8 +73,8 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update Address set (Street = @Street, Number = @Number, Neighborhood = @Neighborhood," +
-                    "Cep = @Cep, Complement = @Complement, Id_City_Address = @Id_City_Address) where Street = @Street)";
+                string update = "update Address set Street = @Street, Number = @Number, Neighborhood = @Neighborhood," +
+                    "Cep = @Cep, Complement = @Complement where Id_Address = @Id_Address";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
@@ -83,7 +83,7 @@ namespace AndreTurismo.Services
                 commandUpdate.Parameters.Add(new SqlParameter("@Neighborhood", address.Neighborhood));
                 commandUpdate.Parameters.Add(new SqlParameter("@Cep", address.Cep));
                 commandUpdate.Parameters.Add(new SqlParameter("@Complement", address.Complement));
-                commandUpdate.Parameters.Add(new SqlParameter("@Id_City_Address", InsertCity(address)));
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_Address", address.IdAddress));
 
                 commandUpdate.ExecuteNonQuery();
                 status = true;
@@ -106,12 +106,11 @@ namespace AndreTurismo.Services
 
             try
             {
-                string delete = "delete from Address where (Street = @Street, Number = @Number, Neighborhood = @Neighborhood," +
-                    "Cep = @Cep, Complement = @Complement, Id_City_Address = @Id_City_Address)";
+                string delete = "delete from Address where Id_Address = @Id_Address)";
 
                 SqlCommand commandDelete = new SqlCommand(delete, conn);
 
-                commandDelete.Parameters.Remove(address);
+                commandDelete.Parameters.Add(new SqlParameter("@Id_Address", address.IdAddress));
 
                 commandDelete.ExecuteNonQuery();
                 status = true;
@@ -134,7 +133,7 @@ namespace AndreTurismo.Services
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select*from Address");
+            sb.Append("Select a.Street, a.Number,a.Neighborhood, a.Cep, a.Complement, ci.Description FROM Address a JOIN City ci on a.Id_City_Address = ci.Id_City");
 
             SqlCommand commandSelect = new SqlCommand(sb.ToString(), conn);
             SqlDataReader reader = commandSelect.ExecuteReader();
@@ -146,9 +145,11 @@ namespace AndreTurismo.Services
                 address.Street = (string)reader["Street"];
                 address.Number = (int)reader["Number"];
                 address.Neighborhood = (string)reader["Neighborhood"];
-                address.Cep = (string)reader["Street"];
-                address.Complement = (string)reader["Street"];
-                address.City.IdCity = (int)reader["Id_City_Address"];
+                address.Cep = (string)reader["Cep"];
+                address.Complement = (string)reader["Complement"];
+                address.City = new City();
+                address.City.Description = (string)reader["Description"];
+                
                 //city.DtRegisterCity = (string)reader["DtRegister_City"];
 
                 list.Add(address);
