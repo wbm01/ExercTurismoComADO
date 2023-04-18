@@ -60,19 +60,22 @@ namespace AndreTurismo.Services
         public bool UpdateClient(Client client)
         {
             bool status = false;
+            int id = 0;
 
             try
             {
-                string update = "update Client set (Name_Client = @Name_Client, Phone = @Phone, Id_Address_Client = @Id_Address_Client) where Id_Client = @Id_Client)";
+                string update = "update Client set Name_Client = @Name_Client, Phone = @Phone where Id_Client = @Id_Client";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
                 commandUpdate.Parameters.Add(new SqlParameter("@Name_Client", client.NameClient));
                 commandUpdate.Parameters.Add(new SqlParameter("@Phone", client.Phone));
-                commandUpdate.Parameters.Add(new SqlParameter("@Id_Address_Client", client.AddressClient.IdAddress));
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_Client", client.IdClient));
+                //commandUpdate.Parameters.Add(new SqlParameter("@Id_Address_Client", client.AddressClient.IdAddress));
 
                 commandUpdate.ExecuteNonQuery();
                 status = true;
+
             }
             catch (Exception)
             {
@@ -83,6 +86,7 @@ namespace AndreTurismo.Services
             {
                 conn.Close();
             }
+            
             return status;
         }
 
