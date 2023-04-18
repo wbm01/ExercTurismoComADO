@@ -23,5 +23,12 @@ namespace AndreTurismo.Models
         public City City { get; set; }
 
         public DateTime DtRegisterAddress { get; set; }
+
+        public override string ToString()
+        {
+            return "\nEndereço: " + Street + "\nNúmero: " + Number + "\nBairro: "
+                + Neighborhood + "\nCep: " + Cep + "\nComplemento: " + Complement +
+                "\nCidade: " + City + "\nData de cadastro: " + DtRegisterAddress;
+        }
     }
 }
