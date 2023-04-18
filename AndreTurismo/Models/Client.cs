@@ -17,5 +17,11 @@ namespace AndreTurismo.Models
         public Address AddressClient { get; set; }
 
         public DateTime DtRegisterClient { get; set; }
+
+        public override string ToString()
+        {
+            return "\nNome: " + NameClient + "\nTelefone: " + Phone +
+                "\nEndereço: " + AddressClient + "\nData de cadastro: " + DtRegisterClient;
+        }
     }
 }

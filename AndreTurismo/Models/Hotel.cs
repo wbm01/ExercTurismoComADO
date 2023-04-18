@@ -17,5 +17,11 @@ namespace AndreTurismo.Models
         public DateTime DtRegisterHotel { get; set; }
 
         public double ValueHotel { get; set; }
+
+        public override string ToString()
+        {
+            return "\nNome: " + NameHotel + "\nEndereço: " + AddressHotel +
+                "\nValor diária: " + ValueHotel + "\nData de cadastro: " + DtRegisterHotel;
+        }
     }
 }
