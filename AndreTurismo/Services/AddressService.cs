@@ -19,9 +19,10 @@ namespace AndreTurismo.Services
             conn.Open();
         }
 
-        public bool InsertAddress(Address address)
+        public Address InsertAddress(Address address)
         {
             bool status = false;
+            int id = 0;
 
             try
             {
@@ -38,7 +39,7 @@ namespace AndreTurismo.Services
                 commandInsert.Parameters.Add(new SqlParameter("@Complement", address.Complement));
                 commandInsert.Parameters.Add(new SqlParameter("@Id_City_Address", InsertCity(address)));
 
-                commandInsert.ExecuteNonQuery();
+                id = (int) commandInsert.ExecuteScalar();
                 status = true;
             }
             catch (Exception)
@@ -50,17 +51,18 @@ namespace AndreTurismo.Services
             {
                 conn.Close();
             }
-            return status;
+            address.IdAddress = id;
+            return address;
         }
 
         public int InsertCity(Address address)
         { 
-                string insert = "insert into City(Description) values (@Description); Select cast(scope_identity() as int)";
+                string insert = "insert into City(Description, DtRegister_City) values (@Description, @DtRegisterCity); Select cast(scope_identity() as int)";
 
                 SqlCommand commandInsert = new SqlCommand(insert, conn);
 
                 commandInsert.Parameters.Add(new SqlParameter("@Description", address.City.Description));
-                //commandInsert.Parameters.Add(new SqlParameter("@DataRegister_City", city.DtRegisterCity));
+                commandInsert.Parameters.Add(new SqlParameter("@DtRegisterCity", DateTime.Now));
 
                 return (int) commandInsert.ExecuteScalar();  
         }

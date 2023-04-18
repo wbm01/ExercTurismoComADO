@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AndreTurismo.Models;
+using AndreTurismo.Services;
 
 namespace AndreTurismo.Controllers
 {
@@ -11,7 +12,8 @@ namespace AndreTurismo.Controllers
     {
         public bool InsertHotel(Hotel hotel)
         {
-            return new HotelController().InsertHotel(hotel);
+            hotel.AddressHotel = new AddressService().InsertAddress(hotel.AddressHotel);
+            return new HotelService().InsertHotel(hotel);
         }
 
         public bool DeleteHotel(Hotel hotel)

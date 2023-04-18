@@ -18,6 +18,7 @@ namespace AndreTurismo.Services
         {
             conn = new SqlConnection(strConn);
             conn.Open();
+
         }
 
         public bool InsertClient(Client client)
@@ -38,7 +39,7 @@ namespace AndreTurismo.Services
                 commandInsert.Parameters.Add(new SqlParameter("@Neighborhood", client.AddressClient.Neighborhood));
                 commandInsert.Parameters.Add(new SqlParameter("@Cep", client.AddressClient.Cep));
                 commandInsert.Parameters.Add(new SqlParameter("@Complement", client.AddressClient.Complement));*/
-                commandInsert.Parameters.Add(new SqlParameter("@Id_City_Address", client.AddressClient.IdAddress));
+                commandInsert.Parameters.Add(new SqlParameter("@Id_Address_Client", client.AddressClient.IdAddress));
 
                 commandInsert.ExecuteNonQuery();
                 status = true;
@@ -61,7 +62,7 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update Client set (Name_Client = @Name_Client, Phone = @Phone, Id_Address_Client = @Id_Address_Client) where Name_Client = @Name_Client)";
+                string update = "update Client set (Name_Client = @Name_Client, Phone = @Phone, Id_Address_Client = @Id_Address_Client) where Id_Client = @Id_Client)";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
@@ -90,12 +91,11 @@ namespace AndreTurismo.Services
 
             try
             {
-                string delete = "delete from Client where (Name_Client = @Name_Client, " +
-                    "Phone = @Phone, Id_Address_Client = @Id_Address_Client)";
+                string delete = "delete from Client where Name_Client = @Name_Client";
 
                 SqlCommand commandDelete = new SqlCommand(delete, conn);
 
-                commandDelete.Parameters.Remove(client);
+                commandDelete.Parameters.Add(new SqlParameter("@Name_Client", client.NameClient));
 
                 commandDelete.ExecuteNonQuery();
                 status = true;
