@@ -96,11 +96,11 @@ namespace AndreTurismo.Services
 
             try
             {
-                string delete = "delete from Client where Name_Client = @Name_Client";
+                string delete = "delete from Client where Id_Client = @Id_Client";
 
                 SqlCommand commandDelete = new SqlCommand(delete, conn);
 
-                commandDelete.Parameters.Add(new SqlParameter("@Name_Client", client.NameClient));
+                commandDelete.Parameters.Add(new SqlParameter("@Id_Client", client.IdClient));
 
                 commandDelete.ExecuteNonQuery();
                 status = true;
@@ -139,16 +139,6 @@ namespace AndreTurismo.Services
                 client.IdClient = (int)reader["Id_Client"];
                 client.NameClient = (string)reader["Name_Client"];
                 client.Phone = (string)reader["Phone"];
-                //client.AddressClient.IdAddress = (int)reader["Id_Address_Client"];
-
-
-                /*client.AddressClient.Street = (string)reader["Street"];
-                client.AddressClient.Number = (int)reader["Number"];
-                client.AddressClient.Neighborhood = (string)reader["Neighborhood"];
-                client.AddressClient.Cep = (string)reader["Cep"];
-                client.AddressClient.Complement = (string)reader["Complement"];
-                client.AddressClient.Neighborhood = (string)reader["Neighborhood"];
-                client.AddressClient.City.Description = (string)reader["Description"];*/
                 client.AddressClient = new Address();
                 client.AddressClient.Street = (string)reader["Street"];
                 client.AddressClient.Number = (int)reader["Number"];

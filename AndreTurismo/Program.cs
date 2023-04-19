@@ -163,7 +163,9 @@ internal class Program
         //SELECT CITY OK
         //new CityController().GetCityList().ForEach(i => Console.WriteLine(i));
 
-        var city = new City()
+
+        //UPDATE CITY OK
+        /*var city = new City()
         {
             Description = "Osasco",
             IdCity = 1
@@ -178,6 +180,28 @@ internal class Program
         {
             Console.WriteLine("Erro ao alterar o registro!");
             Console.ReadKey();
+        }*/
+
+
+        //UPDATE HOTEL OK
+        /*var hotel = new Hotel()
+        {
+            NameHotel = "Hotel Classe C",
+            ValueHotel = 150,
+            IdHotel = 1,
+        };
+
+        if (new HotelController().UpdateHotel(hotel))
+        {
+            Console.WriteLine("Sucesso! Registro alterado!");
+            Console.ReadKey();
         }
+        else
+        {
+            Console.WriteLine("Erro ao alterar o registro!");
+            Console.ReadKey();
+        }*/
+
+        new HotelController().GetHotelList().ForEach(i => Console.WriteLine(i));
     }
 }

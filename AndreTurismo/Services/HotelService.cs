@@ -55,13 +55,13 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update Hotel set (Name_Hotel = @Name_Hotel, Id_Address_Hotel = @Id_Address_Hotel, Hotel_Value = @Hotel_Value) where Name_Hotel = @Name_Hotel)";
+                string update = "update Hotel set Name_Hotel = @Name_Hotel, Hotel_Value = @Hotel_Value where Id_Hotel = @Id_Hotel";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
                 commandUpdate.Parameters.Add(new SqlParameter("@Name_Hotel", hotel.NameHotel));
-                commandUpdate.Parameters.Add(new SqlParameter("@Id_Address_Hotel", hotel.AddressHotel.IdAddress));
                 commandUpdate.Parameters.Add(new SqlParameter("@Hotel_Value", hotel.ValueHotel));
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_Hotel", hotel.IdHotel));
 
                 commandUpdate.ExecuteNonQuery();
                 status = true;
@@ -84,12 +84,11 @@ namespace AndreTurismo.Services
 
             try
             {
-                string delete = "delete from Hotel where (Name_Hotel = @Name_Hotel, " +
-                    "Id_Address_Hotel = @Id_Address_Hotel, Hotel_Value = @Hotel_Value)";
+                string delete = "delete from Hotel where Id_Hotel = @Id_Hotel";
 
                 SqlCommand commandDelete = new SqlCommand(delete, conn);
 
-                commandDelete.Parameters.Remove(hotel);
+                commandDelete.Parameters.Add(new SqlParameter("@Id_Hotel", hotel.IdHotel));
 
                 commandDelete.ExecuteNonQuery();
                 status = true;
@@ -112,7 +111,7 @@ namespace AndreTurismo.Services
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select*from Hotel");
+            sb.Append("select h.Name_Hotel, h.Hotel_Value, a.Street, a.Number, a.Neighborhood, a.Cep, a.Complement, ci.Description FROM Hotel h JOIN Address a on h.Id_Address_Hotel = a.Id_Address join City ci on ci.Id_City = a.Id_City_Address");
 
             SqlCommand commandSelect = new SqlCommand(sb.ToString(), conn);
             SqlDataReader reader = commandSelect.ExecuteReader();
@@ -122,10 +121,16 @@ namespace AndreTurismo.Services
                 Hotel hotel = new Hotel();
 
                 hotel.NameHotel = (string)reader["Name_Hotel"];
-                hotel.AddressHotel.IdAddress = (int)reader["Id_Address_Hotel"];
-                hotel.ValueHotel = (double)reader["Hotel_Value"];
+                hotel.ValueHotel = (decimal)reader["Hotel_Value"];
+                hotel.AddressHotel = new Address();
+                hotel.AddressHotel.Street = (string)reader["Street"];
+                hotel.AddressHotel.Number = (int)reader["Number"];
+                hotel.AddressHotel.Neighborhood = (string)reader["Neighborhood"];
+                hotel.AddressHotel.Cep = (string)reader["Cep"];
+                hotel.AddressHotel.Complement = (string)reader["Complement"];
+                hotel.AddressHotel.City = new City();
+                hotel.AddressHotel.City.Description = (string)reader["Description"];
 
-                //city.DtRegisterCity = (string)reader["DtRegister_City"];
 
                 list.Add(hotel);
             }

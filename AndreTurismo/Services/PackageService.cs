@@ -124,7 +124,7 @@ namespace AndreTurismo.Services
 
                 hotel.NameHotel = (string)reader["Name_Hotel"];
                 hotel.AddressHotel.IdAddress = (int)reader["Id_Address_Hotel"];
-                hotel.ValueHotel = (double)reader["Hotel_Value"];
+                hotel.ValueHotel = (decimal)reader["Hotel_Value"];
 
                 //city.DtRegisterCity = (string)reader["DtRegister_City"];
 

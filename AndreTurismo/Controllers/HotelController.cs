@@ -18,17 +18,17 @@ namespace AndreTurismo.Controllers
 
         public bool DeleteHotel(Hotel hotel)
         {
-            return new HotelController().DeleteHotel(hotel);
+            return new HotelService().DeleteHotel(hotel);
         }
 
         public List<Hotel> GetHotelList()
         {
-            return new HotelController().GetHotelList();
+            return new HotelService().GetHotelList();
         }
 
         public bool UpdateHotel(Hotel hotel)
         {
-            return new HotelController().UpdateHotel(hotel);
+            return new HotelService().UpdateHotel(hotel);
         }
     }
 }
