@@ -205,5 +205,38 @@ internal class Program
 
         //SELECT HOTEL OK
         //new HotelController().GetHotelList().ForEach(i => Console.WriteLine(i));
+
+        var ticket = new Ticket()
+        {
+            ValueTicket = 500,
+
+            Origin = new()
+            {
+                IdAddress = 1,
+            },
+
+             Destiny = new()
+             {
+                 IdAddress = 4,
+             },
+             
+
+            ClientTicket = new()
+            {
+                IdClient = 3,
+            }
+
+        };
+
+        if (new TicketController().InsertTicket(ticket))
+        {
+            Console.WriteLine("Sucesso! Registro inserido!");
+
+        }
+        else
+        {
+            Console.WriteLine("Erro ao inserir o registro!");
+
+        }
     }
 }

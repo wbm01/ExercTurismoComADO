@@ -12,23 +12,23 @@ namespace AndreTurismo.Controllers
     {
         public bool InsertPackage(Package package)
         {
-            hotel.AddressHotel = new AddressService().InsertAddress(hotel.AddressHotel);
-            return new HotelService().InsertHotel(hotel);
+            package.HotelPackage = new HotelService().InsertHotel(package.HotelPackage);
+            return new PackageService().InsertPackage(package);
         }
 
-        public bool DeleteHotel(Hotel hotel)
+        public bool DeletePackage(Package package)
         {
-            return new HotelService().DeleteHotel(hotel);
+            return new PackageService().DeletePackage(package);
         }
 
-        public List<Hotel> GetHotelList()
+        public List<Hotel> GetPackageList()
         {
-            return new HotelService().GetHotelList();
+            return new PackageService().GetPackageList();
         }
 
-        public bool UpdateHotel(Hotel hotel)
+        public bool UpdatePackage(Package package)
         {
-            return new HotelService().UpdateHotel(hotel);
+            return new PackageService().UpdatePackage(package);
         }
     }
 }

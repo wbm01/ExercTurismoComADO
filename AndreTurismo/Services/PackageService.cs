@@ -50,7 +50,7 @@ namespace AndreTurismo.Services
             return status;
         }
 
-        public bool UpdateHotel(Hotel hotel)
+        public bool UpdatePackage(Package package)
         {
             bool status = false;
 
@@ -79,7 +79,7 @@ namespace AndreTurismo.Services
             return status;
         }
 
-        public bool DeleteHotel(Hotel hotel)
+        public bool DeletePackage(Package package)
         {
             bool status = false;
 
@@ -90,7 +90,7 @@ namespace AndreTurismo.Services
 
                 SqlCommand commandDelete = new SqlCommand(delete, conn);
 
-                commandDelete.Parameters.Remove(hotel);
+                commandDelete.Parameters.Remove(package);
 
                 commandDelete.ExecuteNonQuery();
                 status = true;
@@ -107,9 +107,9 @@ namespace AndreTurismo.Services
             return status;
         }
 
-        public List<Hotel> GetHotelList()
+        public List<Package> GetPackageList()
         {
-            List<Hotel> list = new List<Hotel>();
+            List<Package> list = new List<Package>();
 
             StringBuilder sb = new StringBuilder();
 
@@ -120,7 +120,7 @@ namespace AndreTurismo.Services
 
             while (reader.Read())
             {
-                Hotel hotel = new Hotel();
+                Package package = new Package();
 
                 hotel.NameHotel = (string)reader["Name_Hotel"];
                 hotel.AddressHotel.IdAddress = (int)reader["Id_Address_Hotel"];
@@ -128,7 +128,7 @@ namespace AndreTurismo.Services
 
                 //city.DtRegisterCity = (string)reader["DtRegister_City"];
 
-                list.Add(hotel);
+                list.Add(package);
             }
             return list;
         }

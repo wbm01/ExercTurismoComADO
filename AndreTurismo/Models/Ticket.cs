@@ -17,7 +17,7 @@ namespace AndreTurismo.Models
 
         public DateTime DateTicket { get; set; }
 
-        public double ValueTicket { get; set; }
+        public decimal ValueTicket { get; set; }
 
 
     }

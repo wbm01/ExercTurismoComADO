@@ -25,15 +25,15 @@ namespace AndreTurismo.Services
 
             try
             { 
-                string insert = "insert into Package (Id_Hotel_Package, Id_Ticket_Package, Package_Value, Id_Client_Package) values (@Id_Hotel_Package, @Id_Ticket_Package," +
-                    "@Package_Value, @Id_Client_Package); Select cast(scope_identity() as int)";
+                string insert = "insert into Ticket (Id_Address_Origin, Id_Address_Destiny, Id_Client_Ticket, Ticket_Value) values (@Id_Address_Origin, @Id_Address_Destiny," +
+                    "@Id_Client_Ticket, @Ticket_Value); Select cast(scope_identity() as int)";
 
                 SqlCommand commandInsert = new SqlCommand(insert, conn);
 
-                commandInsert.Parameters.Add(new SqlParameter("@Id_Hotel_Package", package.HotelPackage.IdHotel));
-                commandInsert.Parameters.Add(new SqlParameter("@Id_Ticket_Package", package.TicketPackage.IdTicket));
-                commandInsert.Parameters.Add(new SqlParameter("@Package_Value", package.ValuePackage));
-                commandInsert.Parameters.Add(new SqlParameter("@Id_Client_Package", package.ClientPackage.IdClient));
+                commandInsert.Parameters.Add(new SqlParameter("@Id_Address_Origin", ticket.Origin.IdAddress));
+                commandInsert.Parameters.Add(new SqlParameter("@Id_Address_Destiny", ticket.Destiny.IdAddress));
+                commandInsert.Parameters.Add(new SqlParameter("@Id_Client_Ticket", ticket.ClientTicket.IdClient));
+                commandInsert.Parameters.Add(new SqlParameter("@Ticket_Value", ticket.ValueTicket));
 
                 commandInsert.ExecuteNonQuery();
                 status = true;
@@ -56,13 +56,12 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update Hotel set (Name_Hotel = @Name_Hotel, Id_Address_Hotel = @Id_Address_Hotel, Hotel_Value = @Hotel_Value) where Name_Hotel = @Name_Hotel)";
+                string update = "update Ticket set Ticket_Value = @Ticket_Value where Id_Ticket = @Id_Ticket";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
-                commandUpdate.Parameters.Add(new SqlParameter("@Name_Hotel", hotel.NameHotel));
-                commandUpdate.Parameters.Add(new SqlParameter("@Id_Address_Hotel", hotel.AddressHotel.IdAddress));
-                commandUpdate.Parameters.Add(new SqlParameter("@Hotel_Value", hotel.ValueHotel));
+                commandUpdate.Parameters.Add(new SqlParameter("@Ticket_Value", ticket.ValueTicket));
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_Ticket", ticket.IdTicket));
 
                 commandUpdate.ExecuteNonQuery();
                 status = true;
@@ -85,12 +84,11 @@ namespace AndreTurismo.Services
 
             try
             {
-                string delete = "delete from Hotel where (Name_Hotel = @Name_Hotel, " +
-                    "Id_Address_Hotel = @Id_Address_Hotel, Hotel_Value = @Hotel_Value)";
+                string delete = "delete from Ticket where Id_Ticket = @Id_Ticket";
 
                 SqlCommand commandDelete = new SqlCommand(delete, conn);
 
-                commandDelete.Parameters.Remove(hotel);
+                commandDelete.Parameters.Add(new SqlParameter("@Id_Ticket", ticket.IdTicket));
 
                 commandDelete.ExecuteNonQuery();
                 status = true;
@@ -107,28 +105,55 @@ namespace AndreTurismo.Services
             return status;
         }
 
-        public List<Hotel> GetTicketList()
+        public List<Ticket> GetTicketList()
         {
-            List<Hotel> list = new List<Hotel>();
+            List<Ticket> list = new List<Ticket>();
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select*from Hotel");
+            sb.Append("SELECT t.Ticket_Value, c.Name_Client, " +
+                "c.Phone, a.Street, a.Number,a.Neighborhood, a.Cep, " +
+                "a.Complement, ci.Description, ad.Street, " +
+                "ad.Number, ad.Neighborhood, ad.Cep, ad.Complement, " +
+                "cid.Description FROM ticket t JOIN Client c on " +
+                "t.Id_Client_Ticket = c.Id_Client JOIN Address a on " +
+                "t.Id_Address_Origin = a.Id_Address " +
+                "JOIN Address ad on t.Id_Address_Destiny = ad.Id_Address");
 
             SqlCommand commandSelect = new SqlCommand(sb.ToString(), conn);
             SqlDataReader reader = commandSelect.ExecuteReader();
 
             while (reader.Read())
             {
-                Hotel hotel = new Hotel();
+                Ticket ticket = new Ticket();
 
-                hotel.NameHotel = (string)reader["Name_Hotel"];
-                hotel.AddressHotel.IdAddress = (int)reader["Id_Address_Hotel"];
-                hotel.ValueHotel = (decimal)reader["Hotel_Value"];
+                ticket.ValueTicket = (decimal)reader["Ticket_Value"];
+
+                ticket.ClientTicket = new Client();
+                ticket.ClientTicket.NameClient = (string)reader["Name_Client"];
+                ticket.ClientTicket.Phone = (string)reader["Phone"];
+
+                ticket.Origin = new Address();
+                ticket.Origin.Street = (string)reader["Street"];
+                ticket.Origin.Number = (int)reader["Number"];
+                ticket.Origin.Neighborhood = (string)reader["Neighborhood"];
+                ticket.Origin.Cep = (string)reader["Cep"];
+                ticket.Origin.Complement = (string)reader["Complement"];
+                ticket.Origin.City = new City();
+                ticket.Origin.City.Description = (string)reader["Description"];
+
+                ticket.Destiny = new Address();
+                ticket.Destiny.Street = (string)reader["Street"];
+                ticket.Destiny.Number = (int)reader["Number"];
+                ticket.Destiny.Neighborhood = (string)reader["Neighborhood"];
+                ticket.Destiny.Cep = (string)reader["Cep"];
+                ticket.Destiny.Complement = (string)reader["Complement"];
+                ticket.Destiny.City = new City();
+                ticket.Destiny.City.Description = (string)reader["Description"];
 
                 //city.DtRegisterCity = (string)reader["DtRegister_City"];
 
-                list.Add(hotel);
+                list.Add(ticket);
             }
             return list;
         }
