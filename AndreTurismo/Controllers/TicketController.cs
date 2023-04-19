@@ -12,8 +12,10 @@ namespace AndreTurismo.Controllers
     {
         public bool InsertTicket(Ticket ticket)
         {
-            ticket.Origin = new AddressService().InsertAddress(ticket.Origin);
-            ticket.Destiny = new AddressService().InsertAddress(ticket.Destiny);
+            //ticket.Origin = new AddressService().InsertAddress(ticket.Origin);
+            //ticket.Destiny = new AddressService().InsertAddress(ticket.Destiny);
+            
+
             return new TicketService().InsertTicket(ticket);
         }
 

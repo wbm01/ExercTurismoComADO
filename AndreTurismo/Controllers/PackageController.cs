@@ -10,7 +10,7 @@ namespace AndreTurismo.Controllers
 {
     public class PackageController
     {
-        public bool InsertPackage(Package package)
+        /*public bool InsertPackage(Package package)
         {
             package.HotelPackage = new HotelService().InsertHotel(package.HotelPackage);
             return new PackageService().InsertPackage(package);
@@ -29,6 +29,6 @@ namespace AndreTurismo.Controllers
         public bool UpdatePackage(Package package)
         {
             return new PackageService().UpdatePackage(package);
-        }
+        }*/
     }
 }

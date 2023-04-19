@@ -206,13 +206,15 @@ internal class Program
         //SELECT HOTEL OK
         //new HotelController().GetHotelList().ForEach(i => Console.WriteLine(i));
 
-        var ticket = new Ticket()
+
+        //INSERT TICKET OK
+        /*var ticket = new Ticket()
         {
             ValueTicket = 500,
 
             Origin = new()
             {
-                IdAddress = 1,
+                IdAddress = 3,
             },
 
              Destiny = new()
@@ -223,8 +225,10 @@ internal class Program
 
             ClientTicket = new()
             {
-                IdClient = 3,
+                IdClient = 4,
             }
+
+            
 
         };
 
@@ -237,6 +241,11 @@ internal class Program
         {
             Console.WriteLine("Erro ao inserir o registro!");
 
-        }
+        }*/
+
+        //new TicketController().GetTicketList().ForEach(i => Console.WriteLine(i));
+
+        //SELECT CLIENT OK
+        //new ClientController().GetClientList().ForEach(i => Console.WriteLine(i));
     }
 }

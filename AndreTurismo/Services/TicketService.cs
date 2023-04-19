@@ -25,14 +25,15 @@ namespace AndreTurismo.Services
 
             try
             { 
-                string insert = "insert into Ticket (Id_Address_Origin, Id_Address_Destiny, Id_Client_Ticket, Ticket_Value) values (@Id_Address_Origin, @Id_Address_Destiny," +
-                    "@Id_Client_Ticket, @Ticket_Value); Select cast(scope_identity() as int)";
+                string insert = "insert into Ticket (Id_Address_Origin, Id_Address_Destiny, Id_Client_Ticket, DtTicket, Ticket_Value) values (@Id_Address_Origin, @Id_Address_Destiny," +
+                    "@Id_Client_Ticket, @DtTicket, @Ticket_Value); Select cast(scope_identity() as int)";
 
                 SqlCommand commandInsert = new SqlCommand(insert, conn);
 
                 commandInsert.Parameters.Add(new SqlParameter("@Id_Address_Origin", ticket.Origin.IdAddress));
                 commandInsert.Parameters.Add(new SqlParameter("@Id_Address_Destiny", ticket.Destiny.IdAddress));
                 commandInsert.Parameters.Add(new SqlParameter("@Id_Client_Ticket", ticket.ClientTicket.IdClient));
+                commandInsert.Parameters.Add(new SqlParameter("@DtTicket", DateTime.Now));
                 commandInsert.Parameters.Add(new SqlParameter("@Ticket_Value", ticket.ValueTicket));
 
                 commandInsert.ExecuteNonQuery();
@@ -56,11 +57,12 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update Ticket set Ticket_Value = @Ticket_Value where Id_Ticket = @Id_Ticket";
+                string update = "update Ticket set Ticket_Value = @Ticket_Value, DtTicket = @DtTicket where Id_Ticket = @Id_Ticket";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
                 commandUpdate.Parameters.Add(new SqlParameter("@Ticket_Value", ticket.ValueTicket));
+                commandUpdate.Parameters.Add(new SqlParameter("@DtTicket", DateTime.Now));
                 commandUpdate.Parameters.Add(new SqlParameter("@Id_Ticket", ticket.IdTicket));
 
                 commandUpdate.ExecuteNonQuery();
@@ -111,14 +113,17 @@ namespace AndreTurismo.Services
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("SELECT t.Ticket_Value, c.Name_Client, " +
-                "c.Phone, a.Street, a.Number,a.Neighborhood, a.Cep, " +
-                "a.Complement, ci.Description, ad.Street, " +
-                "ad.Number, ad.Neighborhood, ad.Cep, ad.Complement, " +
-                "cid.Description FROM ticket t JOIN Client c on " +
-                "t.Id_Client_Ticket = c.Id_Client JOIN Address a on " +
-                "t.Id_Address_Origin = a.Id_Address " +
-                "JOIN Address ad on t.Id_Address_Destiny = ad.Id_Address");
+            sb.Append("select t.Id_Ticket as Ticket,t.DtTicket as Ticket, " +
+                "a.Street as Address, a.Number as Address," +
+                "a.Neighborhood as Address, a.Cep as Address, " +
+                "a.Complement as Address,ad.Street as Address, " +
+                "ad.Number as Address, ad.Neighborhood as Address," +
+                "ad.Cep as Address, ad.Complement as Address, " +
+                "c.Name_Client as Client,c.Phone as Client, " +
+                "t.Ticket_Value as Ticket FROM Ticket t " +
+                "JOIN Address a on t.Id_Address_Origin = a.Id_Address " +
+                "JOIN Address ad on t.Id_Address_Destiny = ad.Id_Address " +
+                "JOIN Client c on t.Id_Client_Ticket = c.Id_Client");
 
             SqlCommand commandSelect = new SqlCommand(sb.ToString(), conn);
             SqlDataReader reader = commandSelect.ExecuteReader();
@@ -127,11 +132,10 @@ namespace AndreTurismo.Services
             {
                 Ticket ticket = new Ticket();
 
+                ticket.IdTicket = (int)reader["Id_Ticket"];
+                //ticket.DateTicket = (DateTime)reader["DtTicket"];
                 ticket.ValueTicket = (decimal)reader["Ticket_Value"];
-
-                ticket.ClientTicket = new Client();
-                ticket.ClientTicket.NameClient = (string)reader["Name_Client"];
-                ticket.ClientTicket.Phone = (string)reader["Phone"];
+                
 
                 ticket.Origin = new Address();
                 ticket.Origin.Street = (string)reader["Street"];
@@ -151,7 +155,11 @@ namespace AndreTurismo.Services
                 ticket.Destiny.City = new City();
                 ticket.Destiny.City.Description = (string)reader["Description"];
 
-                //city.DtRegisterCity = (string)reader["DtRegister_City"];
+                ticket.ClientTicket = new Client();
+                ticket.ClientTicket.NameClient = (string)reader["Name_Client"];
+                ticket.ClientTicket.Phone = (string)reader["Phone"];
+
+               
 
                 list.Add(ticket);
             }

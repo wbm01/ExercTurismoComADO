@@ -38,7 +38,7 @@ namespace AndreTurismo.Services
                 City city = new City();
 
                 city.Description = (string)reader["Description"];
-                //city.DtRegisterCity = (string)reader["DtRegister_City"];
+                city.DtRegisterCity = (DateTime)reader["DtRegister_City"];
 
                 list.Add(city);
             }
@@ -51,12 +51,13 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update City set Description = @Description where Id_City = @Id_City";
+                string update = "update City set Description = @Description, DtRegister_City = @DtRegister_City where Id_City = @Id_City";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
                 commandUpdate.Parameters.Add(new SqlParameter("@Description", city.Description));
                 commandUpdate.Parameters.Add(new SqlParameter("@Id_City", city.IdCity));
+                commandUpdate.Parameters.Add(new SqlParameter("@DtRegister_City", DateTime.Now));
 
                 commandUpdate.ExecuteNonQuery();
                 status = true;

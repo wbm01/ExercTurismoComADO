@@ -25,14 +25,15 @@ namespace AndreTurismo.Services
 
             try
             {
-                string insert = "insert into Hotel (Name_Hotel, Id_Address_Hotel, Hotel_Value) values (@Name_Hotel," +
-                    "@Id_Address_Hotel, @Hotel_Value); Select cast(scope_identity() as int)";
+                string insert = "insert into Hotel (Name_Hotel, Id_Address_Hotel, DtRegister_Hotel, Hotel_Value) values (@Name_Hotel," +
+                    "@Id_Address_Hotel, @DtRegister_Hotel, @Hotel_Value); Select cast(scope_identity() as int)";
 
                 SqlCommand commandInsert = new SqlCommand(insert, conn);
 
                 commandInsert.Parameters.Add(new SqlParameter("@Name_Hotel", hotel.NameHotel));
                 commandInsert.Parameters.Add(new SqlParameter("@Id_Address_Hotel", hotel.AddressHotel.IdAddress));
                 commandInsert.Parameters.Add(new SqlParameter("@Hotel_Value", hotel.ValueHotel));
+                commandInsert.Parameters.Add(new SqlParameter("@DtRegister_Hotel", DateTime.Now));
 
                 commandInsert.ExecuteNonQuery();
                 status = true;
@@ -55,12 +56,13 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update Hotel set Name_Hotel = @Name_Hotel, Hotel_Value = @Hotel_Value where Id_Hotel = @Id_Hotel";
+                string update = "update Hotel set Name_Hotel = @Name_Hotel, DtRegister_Hotel = @DtRegister_Hotel, Hotel_Value = @Hotel_Value where Id_Hotel = @Id_Hotel";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
                 commandUpdate.Parameters.Add(new SqlParameter("@Name_Hotel", hotel.NameHotel));
                 commandUpdate.Parameters.Add(new SqlParameter("@Hotel_Value", hotel.ValueHotel));
+                commandUpdate.Parameters.Add(new SqlParameter("@DtRegister_Hotel", DateTime.Now));
                 commandUpdate.Parameters.Add(new SqlParameter("@Id_Hotel", hotel.IdHotel));
 
                 commandUpdate.ExecuteNonQuery();
@@ -111,7 +113,7 @@ namespace AndreTurismo.Services
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select h.Name_Hotel, h.Hotel_Value, a.Street, a.Number, a.Neighborhood, a.Cep, a.Complement, ci.Description FROM Hotel h JOIN Address a on h.Id_Address_Hotel = a.Id_Address join City ci on ci.Id_City = a.Id_City_Address");
+            sb.Append("select h.Name_Hotel, h.Hotel_Value, a.Street, a.Number, a.Neighborhood, a.Cep, a.Complement, h.DtRegister_Hotel ci.Description FROM Hotel h JOIN Address a on h.Id_Address_Hotel = a.Id_Address join City ci on ci.Id_City = a.Id_City_Address");
 
             SqlCommand commandSelect = new SqlCommand(sb.ToString(), conn);
             SqlDataReader reader = commandSelect.ExecuteReader();
@@ -122,6 +124,7 @@ namespace AndreTurismo.Services
 
                 hotel.NameHotel = (string)reader["Name_Hotel"];
                 hotel.ValueHotel = (decimal)reader["Hotel_Value"];
+                hotel.DtRegisterHotel = (DateTime)reader["DtRegister_Hotel"];
                 hotel.AddressHotel = new Address();
                 hotel.AddressHotel.Street = (string)reader["Street"];
                 hotel.AddressHotel.Number = (int)reader["Number"];

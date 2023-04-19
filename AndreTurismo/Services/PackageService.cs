@@ -10,7 +10,7 @@ namespace AndreTurismo.Services
 {
     public class PackageService
     {
-        readonly string strConn = @"Server=(localdb)\MSSQLLocalDB;Integrated Security=true;AttachDbFileName=C:\Users\adm\source\repos\ProjAulaADO\Banco de Dados\turismo2.mdf;";
+        /*readonly string strConn = @"Server=(localdb)\MSSQLLocalDB;Integrated Security=true;AttachDbFileName=C:\Users\adm\source\repos\ProjAulaADO\Banco de Dados\turismo2.mdf;";
         readonly SqlConnection conn;
 
         public PackageService()
@@ -24,7 +24,7 @@ namespace AndreTurismo.Services
             bool status = false;
 
             try
-            { //parei aqui
+            { 
                 string insert = "insert into Package (Id_Hotel_Package, Id_Ticket_Package, Package_Value, Id_Client_Package) values (@Id_Hotel_Package, @Id_Ticket_Package," +
                     "@Package_Value, @Id_Client_Package); Select cast(scope_identity() as int)";
 
@@ -131,6 +131,6 @@ namespace AndreTurismo.Services
                 list.Add(package);
             }
             return list;
-        }
+        }*/
     }
 }

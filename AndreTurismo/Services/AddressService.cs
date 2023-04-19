@@ -27,8 +27,8 @@ namespace AndreTurismo.Services
             try
             {
                 string insert = "insert into Address (Street, Number, Neighborhood," +
-                    "Cep, Complement, Id_City_Address) values (@Street, @Number, @Neighborhood," +
-                    "@Cep, @Complement, @Id_City_Address); Select cast(scope_identity() as int)";
+                    "Cep, Complement, Id_City_Address, DtRegister_Address) values (@Street, @Number, @Neighborhood," +
+                    "@Cep, @Complement, @Id_City_Address, @DtRegister_Address); Select cast(scope_identity() as int)";
 
                 SqlCommand commandInsert = new SqlCommand(insert, conn);
 
@@ -38,6 +38,7 @@ namespace AndreTurismo.Services
                 commandInsert.Parameters.Add(new SqlParameter("@Cep", address.Cep));
                 commandInsert.Parameters.Add(new SqlParameter("@Complement", address.Complement));
                 commandInsert.Parameters.Add(new SqlParameter("@Id_City_Address", InsertCity(address)));
+                commandInsert.Parameters.Add(new SqlParameter("@DtRegisterAddress", DateTime.Now));
 
                 id = (int) commandInsert.ExecuteScalar();
                 status = true;
@@ -74,7 +75,7 @@ namespace AndreTurismo.Services
             try
             {
                 string update = "update Address set Street = @Street, Number = @Number, Neighborhood = @Neighborhood," +
-                    "Cep = @Cep, Complement = @Complement where Id_Address = @Id_Address";
+                    "Cep = @Cep, Complement = @Complement, DtRegister_Address = @DtRegister_Address  where Id_Address = @Id_Address";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
@@ -84,6 +85,7 @@ namespace AndreTurismo.Services
                 commandUpdate.Parameters.Add(new SqlParameter("@Cep", address.Cep));
                 commandUpdate.Parameters.Add(new SqlParameter("@Complement", address.Complement));
                 commandUpdate.Parameters.Add(new SqlParameter("@Id_Address", address.IdAddress));
+                commandUpdate.Parameters.Add(new SqlParameter("@DtRegister_Address", DateTime.Now));
 
                 commandUpdate.ExecuteNonQuery();
                 status = true;
@@ -133,7 +135,7 @@ namespace AndreTurismo.Services
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("Select a.Street, a.Number,a.Neighborhood, a.Cep, a.Complement, ci.Description FROM Address a JOIN City ci on a.Id_City_Address = ci.Id_City");
+            sb.Append("Select a.Street, a.Number,a.Neighborhood, a.Cep, a.Complement a.DtRegister_Address, ci.Description FROM Address a JOIN City ci on a.Id_City_Address = ci.Id_City");
 
             SqlCommand commandSelect = new SqlCommand(sb.ToString(), conn);
             SqlDataReader reader = commandSelect.ExecuteReader();
@@ -147,9 +149,11 @@ namespace AndreTurismo.Services
                 address.Neighborhood = (string)reader["Neighborhood"];
                 address.Cep = (string)reader["Cep"];
                 address.Complement = (string)reader["Complement"];
+                address.DtRegisterAddress = (DateTime)reader["DtRegister_Address"];
                 address.City = new City();
                 address.City.Description = (string)reader["Description"];
                 
+
                 //city.DtRegisterCity = (string)reader["DtRegister_City"];
 
                 list.Add(address);

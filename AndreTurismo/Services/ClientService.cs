@@ -28,8 +28,8 @@ namespace AndreTurismo.Services
 
             try
             {
-                string insert = "insert into Client (Name_Client, Phone, Id_Address_Client) values (@Name_Client," +
-                    "@Phone,@Id_Address_Client); Select cast(scope_identity() as int)";
+                string insert = "insert into Client (Name_Client, Phone, Id_Address_Client, DtRegister_Client) values (@Name_Client," +
+                    "@Phone,@Id_Address_Client,@DtRegister_Client); Select cast(scope_identity() as int)";
 
                 SqlCommand commandInsert = new SqlCommand(insert, conn);
 
@@ -41,6 +41,7 @@ namespace AndreTurismo.Services
                 commandInsert.Parameters.Add(new SqlParameter("@Cep", client.AddressClient.Cep));
                 commandInsert.Parameters.Add(new SqlParameter("@Complement", client.AddressClient.Complement));*/
                 commandInsert.Parameters.Add(new SqlParameter("@Id_Address_Client", client.AddressClient.IdAddress));
+                commandInsert.Parameters.Add(new SqlParameter("@DtRegister_Client", DateTime.Now));
 
                 commandInsert.ExecuteNonQuery();
                 status = true;
@@ -64,14 +65,14 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update Client set Name_Client = @Name_Client, Phone = @Phone where Id_Client = @Id_Client";
+                string update = "update Client set Name_Client = @Name_Client, Phone = @Phone, DtRegister_Client = @DtRegister_Client where Id_Client = @Id_Client";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
                 commandUpdate.Parameters.Add(new SqlParameter("@Name_Client", client.NameClient));
                 commandUpdate.Parameters.Add(new SqlParameter("@Phone", client.Phone));
                 commandUpdate.Parameters.Add(new SqlParameter("@Id_Client", client.IdClient));
-                //commandUpdate.Parameters.Add(new SqlParameter("@Id_Address_Client", client.AddressClient.IdAddress));
+                commandUpdate.Parameters.Add(new SqlParameter("@DtRegister_Client", DateTime.Now));
 
                 commandUpdate.ExecuteNonQuery();
                 status = true;
@@ -123,7 +124,7 @@ namespace AndreTurismo.Services
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("SELECT c.Id_Client, c.Name_Client, c.Phone, a.Street, a.Number,a.Neighborhood, a.Cep, a.Complement, ci.Description FROM Client c JOIN Address a on c.Id_Address_Client= a.Id_Address join City ci on ci.Id_City = a.Id_City_Address");
+            sb.Append("SELECT c.Id_Client, c.Name_Client, c.Phone, a.Street, a.Number,a.Neighborhood, a.Cep, a.Complement, c.DtRegister_Client, ci.Description FROM Client c JOIN Address a on c.Id_Address_Client= a.Id_Address join City ci on ci.Id_City = a.Id_City_Address");
 
 
 
@@ -139,12 +140,14 @@ namespace AndreTurismo.Services
                 client.IdClient = (int)reader["Id_Client"];
                 client.NameClient = (string)reader["Name_Client"];
                 client.Phone = (string)reader["Phone"];
+                //client.DtRegisterClient = (DateTime)reader["DtRegister_Client"];
                 client.AddressClient = new Address();
                 client.AddressClient.Street = (string)reader["Street"];
                 client.AddressClient.Number = (int)reader["Number"];
                 client.AddressClient.Neighborhood = (string)reader["Neighborhood"];
                 client.AddressClient.Cep = (string)reader["Cep"];
                 client.AddressClient.Complement = (string)reader["Complement"];
+                
                 client.AddressClient.City = new City();
                 client.AddressClient.City.Description = (string)reader["Description"];
 
