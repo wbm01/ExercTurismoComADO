@@ -10,7 +10,7 @@ namespace AndreTurismo.Controllers
 {
     public class CityController
     {
-        public List<City> SelectListCity()
+        public List<City> GetCityList()
         {
             return new CityService().GetCityList();
         }

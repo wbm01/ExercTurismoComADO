@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using AndreTurismo.Models;
@@ -27,7 +28,7 @@ namespace AndreTurismo.Services
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select*from City");
+            sb.Append("select description from city");
 
             SqlCommand commandSelect = new SqlCommand(sb.ToString(), conn); 
             SqlDataReader reader = commandSelect.ExecuteReader();
@@ -50,11 +51,12 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update City set (Description = @Description) where Description = @Description)";
+                string update = "update City set Description = @Description where Id_City = @Id_City";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
                 commandUpdate.Parameters.Add(new SqlParameter("@Description", city.Description));
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_City", city.IdCity));
 
                 commandUpdate.ExecuteNonQuery();
                 status = true;
@@ -77,11 +79,11 @@ namespace AndreTurismo.Services
 
             try
             {
-                string delete = "delete from City where (Description = @Description)";
+                string delete = "delete from City where Id_City = @Id_City)";
 
                 SqlCommand commandDelete = new SqlCommand(delete, conn);
 
-                commandDelete.Parameters.Remove(city);
+                commandDelete.Parameters.Add(new SqlParameter("@Id_City", city.IdCity));
 
                 commandDelete.ExecuteNonQuery();
                 status = true;

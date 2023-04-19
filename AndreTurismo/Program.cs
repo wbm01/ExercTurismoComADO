@@ -1,4 +1,5 @@
-﻿using AndreTurismo.Controllers;
+﻿using System.Net;
+using AndreTurismo.Controllers;
 using AndreTurismo.Models;
 
 internal class Program
@@ -130,7 +131,9 @@ internal class Program
         //SELECT ADDRESS OK
         //new AddressController().GetAddressList().ForEach(i => Console.WriteLine(i));
 
-        var address = new Address()
+
+        //UPDATE ADDRESS OK
+        /*var address = new Address()
         {
             Street = "AV. 10 de Setembro",
             Number = 400,
@@ -146,6 +149,27 @@ internal class Program
         };
 
         if (new AddressController().UpdateAddress(address))
+        {
+            Console.WriteLine("Sucesso! Registro alterado!");
+            Console.ReadKey();
+        }
+        else
+        {
+            Console.WriteLine("Erro ao alterar o registro!");
+            Console.ReadKey();
+        }*/
+
+
+        //SELECT CITY OK
+        //new CityController().GetCityList().ForEach(i => Console.WriteLine(i));
+
+        var city = new City()
+        {
+            Description = "Osasco",
+            IdCity = 1
+        };
+
+        if (new CityController().UpdateCity(city))
         {
             Console.WriteLine("Sucesso! Registro alterado!");
             Console.ReadKey();
