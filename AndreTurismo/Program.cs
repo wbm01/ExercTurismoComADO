@@ -202,6 +202,8 @@ internal class Program
             Console.ReadKey();
         }*/
 
-        new HotelController().GetHotelList().ForEach(i => Console.WriteLine(i));
+
+        //SELECT HOTEL OK
+        //new HotelController().GetHotelList().ForEach(i => Console.WriteLine(i));
     }
 }
