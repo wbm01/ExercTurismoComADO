@@ -56,7 +56,7 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update Hotel set Name_Hotel = @Name_Hotel, DtRegister_Hotel = @DtRegister_Hotel, Hotel_Value = @Hotel_Value where Id_Hotel = @Id_Hotel";
+                string update = "update Hotel set Name_Hotel = @Name_Hotel, DtRegister_Hotel = @DtRegister_Hotel, Hotel_Value = @Hotel_Value, Id_Address_Hotel = @Id_Address_Hotel where Id_Hotel = @Id_Hotel";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
@@ -64,6 +64,7 @@ namespace AndreTurismo.Services
                 commandUpdate.Parameters.Add(new SqlParameter("@Hotel_Value", hotel.ValueHotel));
                 commandUpdate.Parameters.Add(new SqlParameter("@DtRegister_Hotel", DateTime.Now));
                 commandUpdate.Parameters.Add(new SqlParameter("@Id_Hotel", hotel.IdHotel));
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_Address_Hotel", hotel.AddressHotel.IdAddress));
 
                 commandUpdate.ExecuteNonQuery();
                 status = true;

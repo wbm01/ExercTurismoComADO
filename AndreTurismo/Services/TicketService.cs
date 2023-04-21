@@ -57,13 +57,16 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update Ticket set Ticket_Value = @Ticket_Value, DtTicket = @DtTicket where Id_Ticket = @Id_Ticket";
+                string update = "update Ticket set Ticket_Value = @Ticket_Value, DtTicket = @DtTicket, Id_Address_Origin = @Id_Address_Origin, Id_Address_Destiny = @Id_Address_Destiny, Id_Client_Ticket = @Id_Client_Ticket where Id_Ticket = @Id_Ticket";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
                 commandUpdate.Parameters.Add(new SqlParameter("@Ticket_Value", ticket.ValueTicket));
                 commandUpdate.Parameters.Add(new SqlParameter("@DtTicket", DateTime.Now));
                 commandUpdate.Parameters.Add(new SqlParameter("@Id_Ticket", ticket.IdTicket));
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_Address_Origin", ticket.IdTicket));
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_Address_Destiny", ticket.IdTicket));
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_Client_Ticket", ticket.IdTicket));
 
                 commandUpdate.ExecuteNonQuery();
                 status = true;

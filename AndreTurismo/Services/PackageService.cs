@@ -58,13 +58,16 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update Package set Dt_Register_Package = @Dt_Register_Package, Package_Value = @Package_Value where Id_Package = @Id_Package)";
+                string update = "update Package set Dt_Register_Package = @Dt_Register_Package, Package_Value = @Package_Value, Id_Hotel_Package = @Id_Hotel_Package, Id_Ticket_Package = @Id_Ticket_Package, Id_Client_Package = @Id_Client_Package where Id_Package = @Id_Package)";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
                 commandUpdate.Parameters.Add(new SqlParameter("@Dt_Register_Package", DateTime.Now));
                 commandUpdate.Parameters.Add(new SqlParameter("@Package_Value", package.ValuePackage));
-               
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_Hotel_Package", package.HotelPackage.IdHotel));
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_Ticket_Package", package.TicketPackage.IdTicket));
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_Client_Package", package.ClientPackage.IdClient));
+
                 commandUpdate.ExecuteNonQuery();
                 status = true;
             }

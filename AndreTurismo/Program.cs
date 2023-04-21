@@ -74,24 +74,20 @@ internal class Program
         }*/
 
         //UPDATE CLIENTE OK
-        /*var pessoa = new Client()
+        var pessoa = new Client()
         {
-            NameClient = "Maria",
-            Phone = "3333",
+            NameClient = "Isabella",
+            Phone = "4444",
             IdClient = 4,
 
             AddressClient = new()
             {
-                Street = "AV. 8 de Setembro",
-                Number = 391,
-                Neighborhood = "Selmi Dei",
-                Cep = "14900-000",
-                Complement = "Casa",
+               IdAddress = 5,
 
-                City = new()
+                /*City = new()
                 {
                     Description = "Ribeirão",
-                }
+                }*/
             }
 
 
@@ -106,7 +102,7 @@ internal class Program
         {
             Console.WriteLine("Erro ao alterar o registro!");
             Console.ReadKey();
-        }*/
+        }
 
         //DELETE OK
         /*var pessoa = new Client()
@@ -249,6 +245,6 @@ internal class Program
         //SELECT CLIENT OK
         //new ClientController().GetClientList().ForEach(i => Console.WriteLine(i));
 
-        new PackageController().GetPackageList().ForEach(i => Console.WriteLine(i));
+        //new PackageController().GetPackageList().ForEach(i => Console.WriteLine(i));
     }
 }

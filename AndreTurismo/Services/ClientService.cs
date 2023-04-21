@@ -65,7 +65,7 @@ namespace AndreTurismo.Services
 
             try
             {
-                string update = "update Client set Name_Client = @Name_Client, Phone = @Phone, DtRegister_Client = @DtRegister_Client where Id_Client = @Id_Client";
+                string update = "update Client set Name_Client = @Name_Client, Phone = @Phone, DtRegister_Client = @DtRegister_Client, Id_Address_Client = @Id_Address_Client where Id_Client = @Id_Client";
 
                 SqlCommand commandUpdate = new SqlCommand(update, conn);
 
@@ -73,6 +73,7 @@ namespace AndreTurismo.Services
                 commandUpdate.Parameters.Add(new SqlParameter("@Phone", client.Phone));
                 commandUpdate.Parameters.Add(new SqlParameter("@Id_Client", client.IdClient));
                 commandUpdate.Parameters.Add(new SqlParameter("@DtRegister_Client", DateTime.Now));
+                commandUpdate.Parameters.Add(new SqlParameter("@Id_Address_Client", client.AddressClient.IdAddress));
 
                 commandUpdate.ExecuteNonQuery();
                 status = true;
