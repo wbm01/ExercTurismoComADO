@@ -113,17 +113,7 @@ namespace AndreTurismo.Services
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select t.Id_Ticket as Ticket,t.DtTicket as Ticket, " +
-                "a.Street as Address, a.Number as Address," +
-                "a.Neighborhood as Address, a.Cep as Address, " +
-                "a.Complement as Address,ad.Street as Address, " +
-                "ad.Number as Address, ad.Neighborhood as Address," +
-                "ad.Cep as Address, ad.Complement as Address, " +
-                "c.Name_Client as Client,c.Phone as Client, " +
-                "t.Ticket_Value as Ticket FROM Ticket t " +
-                "JOIN Address a on t.Id_Address_Origin = a.Id_Address " +
-                "JOIN Address ad on t.Id_Address_Destiny = ad.Id_Address " +
-                "JOIN Client c on t.Id_Client_Ticket = c.Id_Client");
+            sb.Append("select t.Id_Ticket as [Ticket],t.DtTicket as [DateTicket],a.Street as [AOrigin], a.Number as [ANumber],a.Neighborhood as [ANeighborhood], a.Cep as [ACep],a.Complement as [AComplement],c.Description as [CityO],ad.Street as [DStreet],ad.Number as [DNumber],ad.Neighborhood as [DNeighborhood],ad.Cep as [DCep],ad.Complement as [DComplement], cd.Description as [CityD],cl.Name_Client as [ClientName],cl.Phone as [ClientPhone],t.Ticket_Value as [TicketValue] FROM Ticket t JOIN Address a on t.Id_Address_Origin = a.Id_Address JOIN City c on a.Id_City_Address = c.Id_City JOIN Address ad on t.Id_Address_Destiny = ad.Id_Address JOIN City cd on ad.Id_City_Address = cd.Id_City JOIN Client cl on t.Id_Client_Ticket = cl.Id_Client");
 
             SqlCommand commandSelect = new SqlCommand(sb.ToString(), conn);
             SqlDataReader reader = commandSelect.ExecuteReader();
@@ -132,34 +122,32 @@ namespace AndreTurismo.Services
             {
                 Ticket ticket = new Ticket();
 
-                ticket.IdTicket = (int)reader["Id_Ticket"];
-                //ticket.DateTicket = (DateTime)reader["DtTicket"];
-                ticket.ValueTicket = (decimal)reader["Ticket_Value"];
+                ticket.IdTicket = (int)reader["Ticket"];
+                //ticket.DateTicket = (DateTime)reader["DateTicket"];
+                ticket.ValueTicket = (decimal)reader["TicketValue"];
                 
 
                 ticket.Origin = new Address();
-                ticket.Origin.Street = (string)reader["Street"];
-                ticket.Origin.Number = (int)reader["Number"];
-                ticket.Origin.Neighborhood = (string)reader["Neighborhood"];
-                ticket.Origin.Cep = (string)reader["Cep"];
-                ticket.Origin.Complement = (string)reader["Complement"];
+                ticket.Origin.Street = (string)reader["AOrigin"];
+                ticket.Origin.Number = (int)reader["ANumber"];
+                ticket.Origin.Neighborhood = (string)reader["ANeighborhood"];
+                ticket.Origin.Cep = (string)reader["ACep"];
+                ticket.Origin.Complement = (string)reader["AComplement"];
                 ticket.Origin.City = new City();
-                ticket.Origin.City.Description = (string)reader["Description"];
+                ticket.Origin.City.Description = (string)reader["CityO"];
 
                 ticket.Destiny = new Address();
-                ticket.Destiny.Street = (string)reader["Street"];
-                ticket.Destiny.Number = (int)reader["Number"];
-                ticket.Destiny.Neighborhood = (string)reader["Neighborhood"];
-                ticket.Destiny.Cep = (string)reader["Cep"];
-                ticket.Destiny.Complement = (string)reader["Complement"];
+                ticket.Destiny.Street = (string)reader["DStreet"];
+                ticket.Destiny.Number = (int)reader["DNumber"];
+                ticket.Destiny.Neighborhood = (string)reader["DNeighborhood"];
+                ticket.Destiny.Cep = (string)reader["DCep"];
+                ticket.Destiny.Complement = (string)reader["DComplement"];
                 ticket.Destiny.City = new City();
-                ticket.Destiny.City.Description = (string)reader["Description"];
+                ticket.Destiny.City.Description = (string)reader["CityD"];
 
                 ticket.ClientTicket = new Client();
-                ticket.ClientTicket.NameClient = (string)reader["Name_Client"];
-                ticket.ClientTicket.Phone = (string)reader["Phone"];
-
-               
+                ticket.ClientTicket.NameClient = (string)reader["ClientName"];
+                ticket.ClientTicket.Phone = (string)reader["ClientPhone"];
 
                 list.Add(ticket);
             }

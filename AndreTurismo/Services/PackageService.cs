@@ -113,37 +113,7 @@ namespace AndreTurismo.Services
 
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select p.Dt_Register_Package as Package, " +
-                "p.Package_Value as Package,h.Name_Hotel as Hotel, " +
-                "h.DtRegister_Hotel as Hotel, h.Hotel_Value as Hotel, " +
-                "ha.Street as Hotel,ha.Number as Hotel, " +
-                "ha.Neighborhood as Hotel, ha.CEP as Hotel, " +
-                "ha.Id_Address as Hotel,hci.Description as Hotel," +
-                "t.DtTicket as Ticket, t.Ticket_Value as Ticket, " +
-                "tsa.Street as Ticket, tsa.Number as Ticket," +
-                "tsa.Neighborhood as Ticket, tsa.CEP as Ticket, " +
-                "tsa.Id_Address as Ticket,tsci.Description as Ticket," +
-                "tda.Street as Ticket, tda.Number as Ticket, " +
-                "tda.Neighborhood as Ticket,tda.CEP as Ticket, " +
-                "tda.Id_Address as Ticket, " +
-                "tdci.Description as Ticket," +
-                "c.Name_Client as Client, c.Phone as Client, " +
-                "c.DtRegister_Client as Client, " +
-                "ca.Street as Client," +
-                "ca.Number as Client, ca.Neighborhood as Client, " +
-                "ca.CEP as Client, ca.Id_Address as Client," +
-                "cci.Description as Client from Package p " +
-                "join Hotel h on p.Id_Hotel_Package=h.Id_Hotel " +
-                "join Address ha on h.Id_Address_Hotel=ha.Id_Address " +
-                "join City hci on ha.Id_City_Address=hci.Id_City " +
-                "join Ticket t on p.Id_Ticket_Package=t.Id_Ticket " +
-                "join Address tsa on t.Id_Address_Destiny=tsa.Id_Address " +
-                "join City tsci on tsa.Id_City_Address=tsci.Id_City " +
-                "join Address tda on t.Id_Address_Destiny=tda.Id_Address " +
-                "join City tdci on tda.Id_City_Address=tdci.Id_City " +
-                "join Client c on p.Id_Client_Package=c.Id_Client " +
-                "join Address ca on c.Id_Address_Client=ca.Id_Address " +
-                "join City cci on ca.Id_City_Address=cci.Id_City");
+            sb.Append("select h.Name_Hotel as [HotelName], h.Hotel_Value as [HotelValue], ah.Street as [HotelStreet], ah.Number as [HotelNumber],ah.Neighborhood as [HotelNeighborhood], ah.Cep as [HotelCep],ah.Complement as [HotelComplement],ch.Description as [CityH],p.Id_Ticket_Package as [Ticket], p.Dt_Register_Package as [DatePackage],a.Street as [AOrigin], a.Number as [ANumber],a.Neighborhood as [ANeighborhood], a.Cep as [ACep],a.Complement as [AComplement],c.Description as [CityO],ad.Street as [DStreet],ad.Number as [DNumber],ad.Neighborhood as [DNeighborhood],ad.Cep as [DCep],ad.Complement as [DComplement], cd.Description as [CityD],cl.Name_Client as [ClientName],cl.Phone as [ClientPhone],p.Package_Value as [PackageValue] FROM Package p JOIN Address a on p.Id_Ticket_Package = a.Id_Address JOIN City c on a.Id_City_Address = c.Id_City JOIN Address ad on p.Id_Ticket_Package = ad.Id_Address JOIN City cd on ad.Id_City_Address = cd.Id_City JOIN Client cl on p.Id_Client_Package = cl.Id_Client JOIN Hotel h on p.Id_Hotel_Package = h.Id_Hotel JOIN Address ah on p.Id_Hotel_Package = ah.Id_Address JOIN City ch on ah.Id_City_Address = ch.Id_City");
 
             SqlCommand commandSelect = new SqlCommand(sb.ToString(), conn);
             SqlDataReader reader = commandSelect.ExecuteReader();
@@ -152,11 +122,45 @@ namespace AndreTurismo.Services
             {
                 Package package = new Package();
 
-                /*hotel.NameHotel = (string)reader["Name_Hotel"];
-                hotel.AddressHotel.IdAddress = (int)reader["Id_Address_Hotel"];
-                hotel.ValueHotel = (decimal)reader["Hotel_Value"];*/
+                //package.DtRegisterPackage = (DateTime)reader["Dt_Register_Package"];
+                //package.ValuePackage = (decimal)reader["Package_Value"];
 
-               
+                package.TicketPackage = new Ticket();
+                package.TicketPackage.IdTicket = (int)reader["Ticket"];
+               //package.TicketPackage.ValueTicket = (decimal)reader["TicketV"];
+
+
+                package.TicketPackage.Origin = new Address();
+                package.TicketPackage.Origin.Street = (string)reader["AOrigin"];
+                package.TicketPackage.Origin.Number = (int)reader["ANumber"];
+                package.TicketPackage.Origin.Neighborhood = (string)reader["ANeighborhood"];
+                package.TicketPackage.Origin.Cep = (string)reader["ACep"];
+                package.TicketPackage.Origin.Complement = (string)reader["AComplement"];
+                package.TicketPackage.Origin.City = new City();
+                package.TicketPackage.Origin.City.Description = (string)reader["CityO"];
+
+                package.TicketPackage.Destiny = new Address();
+                package.TicketPackage.Destiny.Street = (string)reader["DStreet"];
+                package.TicketPackage.Destiny.Number = (int)reader["DNumber"];
+                package.TicketPackage.Destiny.Neighborhood = (string)reader["DNeighborhood"];
+                package.TicketPackage.Destiny.Cep = (string)reader["DCep"];
+                package.TicketPackage.Destiny.Complement = (string)reader["DComplement"];
+                package.TicketPackage.Destiny.City = new City();
+                package.TicketPackage.Destiny.City.Description = (string)reader["CityD"];
+
+                package.ClientPackage = new Client();
+                package.ClientPackage.NameClient = (string)reader["ClientName"];
+                package.ClientPackage.Phone = (string)reader["ClientPhone"];
+
+                package.HotelPackage = new Hotel();
+                package.HotelPackage.NameHotel = (string)reader["HotelName"];
+                package.HotelPackage.ValueHotel = (decimal)reader["HotelValue"];
+                package.HotelPackage.AddressHotel.Street = (string)reader["HotelStreet"];
+                package.HotelPackage.AddressHotel.Number = (int)reader["HotelNumber"];
+                package.HotelPackage.AddressHotel.Neighborhood = (string)reader["HotelNeighborhood"];
+                package.HotelPackage.AddressHotel.Cep = (string)reader["HotelCep"];
+                package.HotelPackage.AddressHotel.Complement = (string)reader["HotelComplement"];
+                package.HotelPackage.AddressHotel.City.Description = (string)reader["CityH"];
 
                 list.Add(package);
             }

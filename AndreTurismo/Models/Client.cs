@@ -20,7 +20,7 @@ namespace AndreTurismo.Models
 
         public override string ToString()
         {
-            return "\nNome: " + NameClient + "\nTelefone: " + Phone + AddressClient.ToString();
+            return "\nNome: " + NameClient + "\nTelefone: " + Phone + AddressClient;
         }
     }
 }

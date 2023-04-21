@@ -12,8 +12,14 @@ namespace AndreTurismo.Models
         public Hotel HotelPackage { get; set; }
         public Ticket TicketPackage { get; set; }
         public DateTime DtRegisterPackage { get; set; }
-        public double ValuePackage { get; set; }
+        public decimal ValuePackage { get; set; }
 
         public Client ClientPackage { get; set; }
+
+        public override string ToString()
+        {
+            return "Hotel Reservado: " + HotelPackage + "\n" + TicketPackage +
+                "Valor do Pacote: " + ValuePackage + "\n" + ClientPackage;
+        }
     }
 }

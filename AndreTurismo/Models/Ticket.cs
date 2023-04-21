@@ -19,6 +19,12 @@ namespace AndreTurismo.Models
 
         public decimal ValueTicket { get; set; }
 
+        public override string ToString()
+        {
+            return "Origem:" + Origin + "\n" + "\nDestino:" + Destiny + "\n" + "\nPassageiro:" + ClientTicket
+                + "\n\nValor da Passagem: " + ValueTicket + "\n\n";
+        }
+
 
     }
 }

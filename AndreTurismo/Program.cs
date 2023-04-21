@@ -243,9 +243,12 @@ internal class Program
 
         }*/
 
+        //SELECT TICKET OK
         //new TicketController().GetTicketList().ForEach(i => Console.WriteLine(i));
 
         //SELECT CLIENT OK
         //new ClientController().GetClientList().ForEach(i => Console.WriteLine(i));
+
+        new PackageController().GetPackageList().ForEach(i => Console.WriteLine(i));
     }
 }
