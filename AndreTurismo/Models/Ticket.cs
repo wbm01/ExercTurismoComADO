@@ -22,7 +22,7 @@ namespace AndreTurismo.Models
         public override string ToString()
         {
             return "Origem:" + Origin + "\n" + "\nDestino:" + Destiny + "\n" + "\nPassageiro:" + ClientTicket
-                + "\n\nValor da Passagem: " + ValueTicket + "\n\n";
+                + "\nValor da Passagem: " + ValueTicket;
         }
 
 

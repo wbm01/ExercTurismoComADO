@@ -18,8 +18,8 @@ namespace AndreTurismo.Models
 
         public override string ToString()
         {
-            return "Hotel Reservado: " + HotelPackage + "\n" + TicketPackage +
-                "Valor do Pacote: " + ValuePackage + "\n" + ClientPackage;
+            return "Hotel Reservado: " + HotelPackage + "\n\n" + TicketPackage +
+                ClientPackage + "\nValor do Pacote: " + ValuePackage;
         }
     }
 }
