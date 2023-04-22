@@ -80,7 +80,7 @@ namespace AndreTurismo.Services
 
             try
             {
-                string delete = "delete from City where Id_City = @Id_City)";
+                string delete = "delete from City where Id_City = @Id_City";
 
                 SqlCommand commandDelete = new SqlCommand(delete, conn);
 
